@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "bst.h"
 
 void bstInorder(bst *t)
@@ -10,7 +8,7 @@ void bstInorder(bst *t)
         bstInorder(t->left);
     }
     //Print node
-    printf("%d, ", t->value);
+    printf("%d ", t->value);
     //Traverse right subtree if it exists
     if(t->right != NULL)
         bstInorder(t->right);
@@ -21,8 +19,8 @@ int bstInsert(int v, bst *t)
     //Check to see that v has not already been inserted
     if(t->value == v)
         return 0;
-    //Assume root node is 0 if empty
-    if(t->value == 0)
+    //Assume root node is VALUEDEF if empty
+    if(t->value == VALUEDEF)
     {
         t->value = v;
         return 0;
