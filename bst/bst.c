@@ -8,7 +8,6 @@ void bstInorder(bst *t)
     if(t->left != NULL)
     {
         bstInorder(t->left);
-        //printf("%p\n", t->left);
     }
     //Print node
     printf("%d, ", t->value);
@@ -32,14 +31,16 @@ int bstInsert(int v, bst *t)
     //v less than value, insert in left subtree
     if(v < t->value)
     {
+        //If left subtree doesn't exist, create it
         if(t->left == NULL)
             t->left = createNode();
 
         bstInsert(v, t->left);
     }
-    //v is greater than value
+    //v is greater than value, insert in right
     else 
     {
+        //If right subtree doesn't exist, create it
         if(t->right == NULL)
             t->right = createNode();
 
@@ -50,14 +51,17 @@ int bstInsert(int v, bst *t)
 
 int bstRemove(int v, bst *t)
 {
+    bst * temp;
+    //If v is the node
     if(t->value == v)
     {
-        
     }
+    //If v is less than the node
     else if(v < t->value)
     {
 
     }
+    //if v is greater than the node
     else if(t->value < v)
     {
 
@@ -65,20 +69,24 @@ int bstRemove(int v, bst *t)
     return 0;
 }
 
-//returns 1 if true, 0 if false
 int bstSearch(int v, bst *t)
 {
+    //If v is the node, return true
     if(t->value==v)
         return 1;
+    //If v is less than value, search left subtree
     else if(v < t->value)
     {
+        //Check left subtree if not null, otherwise false
         if(t->left != NULL)
             return bstSearch(v,t->left);
         else
             return 0;
     }
+    //If v is greater than value, search right subtree
     else if(t->value < v)
     {
+        //Check right subtree if not null, otherwise false
         if(t->right != NULL)
             return bstSearch(v,t->right);
         else
@@ -88,8 +96,11 @@ int bstSearch(int v, bst *t)
 
 node * createNode(void)
 {
+    //Allocate space for n
     node * n = malloc(sizeof(node));
-    n->value = 0;
+
+    //Guarantee values have a default value by setting them manually
+    n->value = VALUEDEF;
     n->left = NULL;
     n->right = NULL;
 
