@@ -49,22 +49,74 @@ int bstInsert(int v, bst *t)
 
 int bstRemove(int v, bst *t)
 {
+    bst * replacement;
     bst * temp;
-    //If v is the node
+    //v is the root
     if(t->value == v)
     {
+
     }
-    //If v is less than the node
+    //v less than value
+    if(v < t->value)
+    {
+        //If left subtree doesn't exist
+        if(t->left == NULL)
+            return 1;
+        //Left subtree is value
+        else if(t->left->value == v)
+        {
+            replacement = getReplacementNode(t->left);
+            temp = t->left;
+            t->left = replacement;
+        }
+        //Else recurse into left subtree
+        else
+        {
+        }
+    }
+    //v is greater than value
+    else 
+    {
+        //If right subtree doesn't exist
+        if(t->right == NULL)
+            return 1;
+        //Right subtree is value
+        else if(t->right->value == v)
+        {
+            replacement = getReplacementNode(t->right);
+        }
+        //Else recurse into right subtree
+        else
+        {
+        }
+    }
+}
+
+node * bstRetrieve(int v, bst *t)
+{
+    //If v is the node, return the node
+    if(t->value==v)
+        return t;
+    //If v is less than value, recursively retrieve value from left subtree
     else if(v < t->value)
     {
-
+        //Check left subtree if not null
+        if(t->left != NULL)
+            return bstRetrieve(v,t->left);
+        //Else the value is not in this tree, return null
+        else
+            return NULL;
     }
-    //if v is greater than the node
+    //If v is greater than value, recursively retrieve value from right subtree
     else if(t->value < v)
     {
-
+        //If right subtree is not null, recurse into it
+        if(t->right != NULL)
+            return bstRetrieve(v,t->right);
+        //Else return null, as v is not in this tree
+        else
+            return NULL;
     }
-    return 0;
 }
 
 int bstSearch(int v, bst *t)
@@ -103,4 +155,29 @@ node * createNode(void)
     n->right = NULL;
 
     return n;
+}
+
+node * getReplacementNode(bst *t)
+{
+    //If there is a left subtree
+    if(t->left != NULL)
+    {
+        //If there is a right subtree to the left subtree
+        if(t->left->right != NULL)
+            return t->left->right;
+        //Else return the left subtree
+        else
+            return t->left;
+    }
+    //Else there is a right subtree
+    else if(t->right != NULL)
+    {
+        //If there is a left sub-subtree
+        if(t->right->left != NULL)
+            return t->right->left;
+        else
+            return t->right;
+    }
+    else
+        return NULL;
 }
